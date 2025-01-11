@@ -1,6 +1,6 @@
 buildscript {
     ext.versions = [
-        kotlin: '1.6.21',
+        kotlin: '2.0.21',
         dokka: '1.5.0',
         conscrypt: '2.5.2'
     ]
@@ -11,7 +11,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.2.0'
+        classpath 'com.android.tools.build:gradle:8.3.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
         classpath "org.jetbrains.dokka:dokka-gradle-plugin:${versions.dokka}"
     }
@@ -28,19 +28,15 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'org.jetbrains.dokka'
 
 android {
-    compileSdkVersion 32
-    buildToolsVersion '32.0.0'
+    compileSdkVersion 33
 
     defaultConfig {
+        namespace "at.bitfire.cert4android"
         minSdkVersion 14            // Android 4.0
-        targetSdkVersion 32         // Android 12v2
+        targetSdkVersion 33         // Android 12v2
     }
 
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-
+    buildFeatures.aidl = true
     buildFeatures.dataBinding = true
     lint {
         disable 'MissingTranslation', 'ExtraTranslation'
@@ -59,6 +55,14 @@ android {
         }
         jdkVersion = 7
     }*/
+}
+
+kotlin.jvmToolchain(21)
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
 }
 
 dependencies {
